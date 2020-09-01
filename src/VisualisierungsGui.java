@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Nicolas Feige
@@ -129,8 +130,17 @@ public class VisualisierungsGui extends JFrame {
     private JPanel kachel_109 = new JPanel();
     private JPanel kachel_1010 = new JPanel();
 
+    private JComboBox algorithmusAuswahl = new JComboBox();
+    private JLabel algorithmusAuswahlTitel = new JLabel();
 
+    private JTextField vectorEinleser = new JTextField();
+    private JLabel vectorEinleserTitel = new JLabel();
 
+    private JTextField pauseEinleser = new JTextField();
+    private JLabel pauseEinleserTitel = new JLabel();
+
+    private JPanel einstellungsSplit = new JPanel();
+    private JButton start = new JButton();
 
     public static void main(String[] args) {
         VisualisierungsGui g = new VisualisierungsGui();
@@ -149,11 +159,26 @@ public class VisualisierungsGui extends JFrame {
         hauptPanel.setLayout(new BorderLayout());
         hauptPanel.add(einstellungsPanel, BorderLayout.NORTH);
         hauptPanel.add(visualisierungsPanel, BorderLayout.CENTER);
-        einstellungsPanel.add(new JLabel("Welcome to Tutorials Point"));
-        einstellungsPanel.setBackground(Color.MAGENTA);
+        //einstellungsPanel.setBackground(Color.MAGENTA);
         //einstellungsPanel.setSize(1280, 220);
         visualisierungsPanel.setBackground(Color.WHITE);
         //visualisierungsPanel.setSize(1280, 500);
+
+        einstellungsPanel.setLayout(new GridLayout(2,3));
+        einstellungsPanel.add(algorithmusAuswahlTitel);
+        algorithmusAuswahlTitel.setText("Algorithmus: ");
+        einstellungsPanel.add(vectorEinleserTitel);
+        vectorEinleserTitel.setText("Zahlen eingeben: (von 0-10, mit',' dazwischen und maximal 10 Zahlen)");
+        einstellungsPanel.add(pauseEinleserTitel);
+        pauseEinleserTitel.setText("Pause zwischen den Sortierungen: (in Sekunden)");
+        einstellungsPanel.add(algorithmusAuswahl);
+        algorithmusAuswahl.addItem("Bubble Sort");
+        einstellungsPanel.add(vectorEinleser);
+        einstellungsPanel.add(einstellungsSplit);
+        einstellungsSplit.setLayout(new GridLayout(1,2));
+        einstellungsSplit.add(pauseEinleser);
+        einstellungsSplit.add(start);
+        start.setText("Start");
 
         visualisierungsPanel.setLayout(new GridLayout(10,10));
         visualisierungsPanel.add(kachel_110);
@@ -266,36 +291,133 @@ public class VisualisierungsGui extends JFrame {
         visualisierungsPanel.add(kachel_91);
         visualisierungsPanel.add(kachel_101);
 
-/**
+
         Vector zahlen = new Vector();
 
-        zahlen.add(8);
-        zahlen.add(3);
-        zahlen.add(9);
+        zahlen.add(7);
+        zahlen.add(4);
+        zahlen.add(6);
         zahlen.add(1);
-        zahlen.add(10);
+        zahlen.add(2);
         zahlen.add(8);
         zahlen.add(3);
         zahlen.add(9);
         zahlen.add(1);
         zahlen.add(10);
 
-        zahlen.add(10);
-        zahlen.add(10);
-        zahlen.add(10);
-        zahlen.add(0);
-        zahlen.add(10);
-        zahlen.add(10);
-        zahlen.add(10);
-        zahlen.add(10);
-        zahlen.add(10);
-        zahlen.add(10);
 
-        vectorDarstellen(zahlen);
- */
+
+        bubbleSort(zahlen, 1);
+
     }
 
     private void vectorDarstellen(Vector zahlen){
+
+        kachel_11.setBackground(null);
+        kachel_12.setBackground(null);
+        kachel_13.setBackground(null);
+        kachel_14.setBackground(null);
+        kachel_15.setBackground(null);
+        kachel_16.setBackground(null);
+        kachel_17.setBackground(null);
+        kachel_18.setBackground(null);
+        kachel_19.setBackground(null);
+        kachel_110.setBackground(null);
+
+        kachel_21.setBackground(null);
+        kachel_22.setBackground(null);
+        kachel_23.setBackground(null);
+        kachel_24.setBackground(null);
+        kachel_25.setBackground(null);
+        kachel_26.setBackground(null);
+        kachel_27.setBackground(null);
+        kachel_28.setBackground(null);
+        kachel_29.setBackground(null);
+        kachel_210.setBackground(null);
+
+        kachel_32.setBackground(null);
+        kachel_33.setBackground(null);
+        kachel_34.setBackground(null);
+        kachel_35.setBackground(null);
+        kachel_36.setBackground(null);
+        kachel_37.setBackground(null);
+        kachel_38.setBackground(null);
+        kachel_39.setBackground(null);
+        kachel_310.setBackground(null);
+
+        kachel_41.setBackground(null);
+        kachel_42.setBackground(null);
+        kachel_43.setBackground(null);
+        kachel_44.setBackground(null);
+        kachel_45.setBackground(null);
+        kachel_46.setBackground(null);
+        kachel_47.setBackground(null);
+        kachel_48.setBackground(null);
+        kachel_49.setBackground(null);
+        kachel_410.setBackground(null);
+
+        kachel_51.setBackground(null);
+        kachel_52.setBackground(null);
+        kachel_53.setBackground(null);
+        kachel_54.setBackground(null);
+        kachel_55.setBackground(null);
+        kachel_56.setBackground(null);
+        kachel_57.setBackground(null);
+        kachel_58.setBackground(null);
+        kachel_59.setBackground(null);
+        kachel_510.setBackground(null);
+        kachel_62.setBackground(null);
+        kachel_63.setBackground(null);
+        kachel_64.setBackground(null);
+        kachel_65.setBackground(null);
+        kachel_66.setBackground(null);
+        kachel_67.setBackground(null);
+        kachel_68.setBackground(null);
+        kachel_69.setBackground(null);
+        kachel_610.setBackground(null);
+
+        kachel_71.setBackground(null);
+        kachel_72.setBackground(null);
+        kachel_73.setBackground(null);
+        kachel_74.setBackground(null);
+        kachel_75.setBackground(null);
+        kachel_76.setBackground(null);
+        kachel_77.setBackground(null);
+        kachel_78.setBackground(null);
+        kachel_79.setBackground(null);
+        kachel_710.setBackground(null);
+
+        kachel_81.setBackground(null);
+        kachel_82.setBackground(null);
+        kachel_83.setBackground(null);
+        kachel_84.setBackground(null);
+        kachel_85.setBackground(null);
+        kachel_86.setBackground(null);
+        kachel_87.setBackground(null);
+        kachel_88.setBackground(null);
+        kachel_89.setBackground(null);
+        kachel_810.setBackground(null);
+        kachel_92.setBackground(null);
+        kachel_93.setBackground(null);
+        kachel_94.setBackground(null);
+        kachel_95.setBackground(null);
+        kachel_96.setBackground(null);
+        kachel_97.setBackground(null);
+        kachel_98.setBackground(null);
+        kachel_99.setBackground(null);
+        kachel_910.setBackground(null);
+
+        kachel_101.setBackground(null);
+        kachel_102.setBackground(null);
+        kachel_103.setBackground(null);
+        kachel_104.setBackground(null);
+        kachel_105.setBackground(null);
+        kachel_106.setBackground(null);
+        kachel_107.setBackground(null);
+        kachel_108.setBackground(null);
+        kachel_109.setBackground(null);
+        kachel_1010.setBackground(null);
+
 
 
         if(zahlen.size() > 0){
@@ -491,7 +613,6 @@ public class VisualisierungsGui extends JFrame {
                 kachel_610.setBackground(Color.DARK_GRAY);
             }
         }
-
         if(zahlen.size() > 6){
             if(Integer.parseInt(zahlen.get(6).toString()) >= 1){
                 kachel_71.setBackground(Color.RED);
@@ -621,13 +742,32 @@ public class VisualisierungsGui extends JFrame {
                 kachel_1010.setBackground(Color.PINK);
             }
         }
+    }
 
+    private void bubbleSort(Vector zahlen, int zeit){
+        boolean fertig = true;
+        int cnt = 0;
+        int vergleichungen = 0;
 
-
-
-
-
+        while (fertig) {
+            fertig = false;
+            for (int i = 0; i < zahlen.size() - 1; i++) {
+                if (Integer.parseInt(zahlen.get(i).toString()) > Integer.parseInt(zahlen.get(i + 1).toString())) {
+                    int temp = Integer.parseInt(zahlen.get(i).toString());
+                    zahlen.setElementAt(zahlen.get(i + 1), i);
+                    zahlen.setElementAt(temp, i + 1);
+                    fertig = true;
+                    vectorDarstellen(zahlen);
+                    try {
+                        TimeUnit.SECONDS.sleep(zeit);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
 
     }
-}
+
 
