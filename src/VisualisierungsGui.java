@@ -306,8 +306,21 @@ public class VisualisierungsGui extends JFrame {
         zahlen1.add(2);
         zahlen1.add(1);
         //bubbleSort(zahlen1, 1);
-        shakerSort(zahlen1, 1);
 
+        //shakerSort(zahlen1, 1);
+
+
+        start.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+
+                new WorkerVisialisierung(zahlen1, kachel_11, kachel_12, kachel_13, kachel_14, kachel_15, kachel_16, kachel_17, kachel_18, kachel_19, kachel_110).execute();
+            }
+        });
+
+
+
+        /**
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -331,7 +344,7 @@ public class VisualisierungsGui extends JFrame {
                     JOptionPane.showMessageDialog(null,"Es müssen mindestens 4 Zahlen eingegeben werden","Fehlermeldung",JOptionPane.WARNING_MESSAGE);
                 }else {
                     if(algorithmusAuswahl.getSelectedItem().equals("Bubble Sort")){
-                        /**
+
                         Vector zahlen1 = new Vector();
                         zahlen1.add(10);
                         zahlen1.add(9);
@@ -345,7 +358,7 @@ public class VisualisierungsGui extends JFrame {
                         zahlen1.add(1);
                         int zeit = Integer.parseInt(pauseEinleser.getText().toString());
                         bubbleSort(zahlen1, 1);
-                         */
+
                     }
                     if(algorithmusAuswahl.getSelectedItem().equals("Quick Sort")){
                         System.out.println("Quick Sort");
@@ -360,10 +373,13 @@ public class VisualisierungsGui extends JFrame {
                 }
             }
         });
+                         */
+
+
     }
 
 
-    private void vectorDarstellen(Vector zahlen){
+    public void vectorDarstellen(Vector zahlen){
 
         kachel_11.setBackground(null);
         kachel_12.setBackground(null);
