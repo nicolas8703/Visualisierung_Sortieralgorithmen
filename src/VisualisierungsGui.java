@@ -168,11 +168,14 @@ public class VisualisierungsGui extends JFrame {
         einstellungsPanel.add(algorithmusAuswahlTitel);
         algorithmusAuswahlTitel.setText("Algorithmus: ");
         einstellungsPanel.add(vectorEinleserTitel);
-        vectorEinleserTitel.setText("Zahlen eingeben: (von 0-10, mit',' dazwischen und maximal 10 Zahlen)");
+        vectorEinleserTitel.setText("Zahlen eingeben: (von 0-10, mit ',' dazwischen und maximal 10 Zahlen)");
         einstellungsPanel.add(pauseEinleserTitel);
         pauseEinleserTitel.setText("Pause zwischen den Sortierungen: (in Sekunden)");
         einstellungsPanel.add(algorithmusAuswahl);
         algorithmusAuswahl.addItem("Bubble Sort");
+        algorithmusAuswahl.addItem("Quick Sort");
+        algorithmusAuswahl.addItem("Shaker Sort");
+        algorithmusAuswahl.addItem("Heap Sort");
         einstellungsPanel.add(vectorEinleser);
         einstellungsPanel.add(einstellungsSplit);
         einstellungsSplit.setLayout(new GridLayout(1,2));
@@ -291,25 +294,74 @@ public class VisualisierungsGui extends JFrame {
         visualisierungsPanel.add(kachel_91);
         visualisierungsPanel.add(kachel_101);
 
+        Vector zahlen1 = new Vector();
+        zahlen1.add(10);
+        zahlen1.add(9);
+        zahlen1.add(8);
+        zahlen1.add(7);
+        zahlen1.add(6);
+        zahlen1.add(5);
+        zahlen1.add(4);
+        zahlen1.add(3);
+        zahlen1.add(2);
+        zahlen1.add(1);
+        //bubbleSort(zahlen1, 1);
+        shakerSort(zahlen1, 1);
 
-        Vector zahlen = new Vector();
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
-        zahlen.add(7);
-        zahlen.add(4);
-        zahlen.add(6);
-        zahlen.add(1);
-        zahlen.add(2);
-        zahlen.add(8);
-        zahlen.add(3);
-        zahlen.add(9);
-        zahlen.add(1);
-        zahlen.add(10);
+                Vector zahlen = new Vector();
+                String temp = vectorEinleser.getText();
+                String[] temp1 = temp.split(",");
+                for (int i = 0; i < temp1.length; i++) {
+                    zahlen.add(i, temp1[i]);
+                }
 
+                if(pauseEinleser.getText().isEmpty() || vectorEinleser.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Bitte alle Felder ausfüllen!","Fehlermeldung",JOptionPane.WARNING_MESSAGE);
+                }else if(Integer.parseInt(pauseEinleser.getText().toString()) < 1){
+                    JOptionPane.showMessageDialog(null,"Die Pause muss mindestens eine Sekunde lang sein!","Fehlermeldung",JOptionPane.WARNING_MESSAGE);
+                }else if(Integer.parseInt(pauseEinleser.getText().toString()) > 5){
+                    JOptionPane.showMessageDialog(null,"Die Pause darf höchstens fünf Sekunden lang sein!","Fehlermeldung",JOptionPane.WARNING_MESSAGE);
+                }else if(zahlen.size() > 10){
+                    JOptionPane.showMessageDialog(null,"Es dürfen maximal 10 Zahlen eingegeben werden","Fehlermeldung",JOptionPane.WARNING_MESSAGE);
+                }else if(zahlen.size() < 3){
+                    JOptionPane.showMessageDialog(null,"Es müssen mindestens 4 Zahlen eingegeben werden","Fehlermeldung",JOptionPane.WARNING_MESSAGE);
+                }else {
+                    if(algorithmusAuswahl.getSelectedItem().equals("Bubble Sort")){
+                        /**
+                        Vector zahlen1 = new Vector();
+                        zahlen1.add(10);
+                        zahlen1.add(9);
+                        zahlen1.add(8);
+                        zahlen1.add(7);
+                        zahlen1.add(6);
+                        zahlen1.add(5);
+                        zahlen1.add(4);
+                        zahlen1.add(3);
+                        zahlen1.add(2);
+                        zahlen1.add(1);
+                        int zeit = Integer.parseInt(pauseEinleser.getText().toString());
+                        bubbleSort(zahlen1, 1);
+                         */
+                    }
+                    if(algorithmusAuswahl.getSelectedItem().equals("Quick Sort")){
+                        System.out.println("Quick Sort");
+                    }
+                    if(algorithmusAuswahl.getSelectedItem().equals("Shaker Sort")){
+                        System.out.println("Shaker Sort");
+                    }
+                    if(algorithmusAuswahl.getSelectedItem().equals("Heap Sort")){
+                        System.out.println("Heap Sort");
 
-
-        bubbleSort(zahlen, 1);
-
+                    }
+                }
+            }
+        });
     }
+
 
     private void vectorDarstellen(Vector zahlen){
 
@@ -767,7 +819,64 @@ public class VisualisierungsGui extends JFrame {
             }
         }
     }
+    private void shakerSort(Vector zahlen, int zeit){
+        boolean change = true;
+        int j = 0;
+        int l = zahlen.size();
+
+        while (change == true) {
+            change = false;
+
+            for (int i = j; i < l - 1; ++i) {
+                if (Integer.parseInt(zahlen.get(i).toString()) > Integer.parseInt(zahlen.get(i + 1).toString())) {
+                    int c = Integer.parseInt(zahlen.get(i).toString());
+                    zahlen.add(i, zahlen.get(i + 1));
+                    zahlen.add(i+1, c);
+                    change = true;
+                    vectorDarstellen(zahlen);
+                    try {
+                        TimeUnit.SECONDS.sleep(zeit);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            if (change == false) {
+                break;
+            }
+            change = false;
+            l--;
+
+            for (int i = l - 1; i >= j; i--) {
+                if (Integer.parseInt(zahlen.get(i).toString()) > Integer.parseInt(zahlen.get(i + 1).toString())) {
+                    int c = Integer.parseInt(zahlen.get(i).toString());
+                    zahlen.add(i, zahlen.get(i + 1));
+                    zahlen.add(i+1, c);
+                    change = true;
+                    vectorDarstellen(zahlen);
+                    try {
+                        TimeUnit.SECONDS.sleep(zeit);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            j++;
+        }
+        System.out.println(zahlen.get(0));
+        System.out.println(zahlen.get(1));
+        System.out.println(zahlen.get(2));
+        System.out.println(zahlen.get(3));
+        System.out.println(zahlen.get(4));
+        System.out.println(zahlen.get(5));
+        System.out.println(zahlen.get(6));
+        System.out.println(zahlen.get(7));
+        System.out.println(zahlen.get(8));
+        System.out.println(zahlen.get(9));
 
     }
+
+}
 
 
