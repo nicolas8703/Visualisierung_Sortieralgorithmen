@@ -11,22 +11,21 @@ import java.util.concurrent.TimeUnit;
  * @date 1.9.2020
  */
 
-
 public class WorkerVisialisierung extends SwingWorker {
 
     private Vector zahlen;
-    JPanel[][] kacheln;
-    int zeit;
-    String algorithmus;
+    private JPanel[][] kacheln;
+    private int zeit;
+    private String algorithmus;
 
-    int heap_cnt = 0;
-    int heap_vergleiche = 0;
-    int bubble_cnt = 0;
-    int bubble_vergleiche = 0;
-    int shaker_cnt = 0;
-    int shaker_vergleiche = 0;
-    int quick_cnt = 0;
-    int quick_vergleiche = 0;
+    private int heap_cnt = 0;
+    private int heap_vergleiche = 0;
+    private int bubble_cnt = 0;
+    private int bubble_vergleiche = 0;
+    private int shaker_cnt = 0;
+    private int shaker_vergleiche = 0;
+    private int quick_cnt = 0;
+    private int quick_vergleiche = 0;
 
 
     public WorkerVisialisierung(Vector zahlen, JPanel[][] kacheln, int zeit, String algorithmus) {
@@ -68,7 +67,6 @@ public class WorkerVisialisierung extends SwingWorker {
 
     private void bubbleSort(Vector zahlen, int zeit){
         boolean fertig = true;
-
         vectorDarstellen(zahlen, kacheln, zeit);
         while (fertig) {
             fertig = false;
@@ -86,13 +84,11 @@ public class WorkerVisialisierung extends SwingWorker {
         }
     }
     public void shakerSort(Vector zahlen, int zeit) {
-
         boolean fertig = true;
         int j = 0;
         int l = zahlen.size();
-
         vectorDarstellen(zahlen, kacheln, zeit);
-        while (fertig == true) {
+        while (fertig) {
             fertig = false;
             for (int i = j; i < l - 1; ++i) {
                 if (Integer.parseInt(zahlen.get(i).toString()) > Integer.parseInt(zahlen.get(i + 1).toString())) {
@@ -104,13 +100,11 @@ public class WorkerVisialisierung extends SwingWorker {
                 }
                 shaker_cnt++;
             }
-
-            if (fertig == false) {
+            if (!fertig) {
                 break;
             }
             fertig = false;
             l--;
-
             for (int i = l - 1; i >= j; i--) {
                 if (Integer.parseInt(zahlen.get(i).toString()) > Integer.parseInt(zahlen.get(i+1).toString())) {
                     int temp = Integer.parseInt(zahlen.get(i).toString());
@@ -129,14 +123,12 @@ public class WorkerVisialisierung extends SwingWorker {
         }
         vectorDarstellen(zahlen, kacheln, zeit);
     }
-
     public void heapSort(Vector zahlen, int zeit) {
         int n = zahlen.size();
         vectorDarstellen(zahlen, kacheln, zeit);
         for (int i = n / 2 - 1; i >= 0; i--) {
             heap(zahlen, n, i);
         }
-
         for (int i = n - 1; i >= 0; i--) {
             int temp = Integer.parseInt(zahlen.get(0).toString());
             zahlen.setElementAt(zahlen.get(i) ,0);;
@@ -146,7 +138,7 @@ public class WorkerVisialisierung extends SwingWorker {
             heap(zahlen, i, 0);
         }
     }
-    public void heap(Vector zahlen, int n, int i) {
+    private void heap(Vector zahlen, int n, int i) {
         heap_cnt++;
         int largest = i;
         int l = 2 * i + 1;
@@ -167,7 +159,7 @@ public class WorkerVisialisierung extends SwingWorker {
             heap(zahlen, n, largest);
         }
     }
-    public void quickSort(Vector zahlen, int zeit,  int start, int end) {
+    private void quickSort(Vector zahlen, int zeit, int start, int end) {
         quick_cnt++;
         vectorDarstellen(zahlen, kacheln, zeit);
         int partition = quick(zahlen, start, end);
@@ -183,7 +175,7 @@ public class WorkerVisialisierung extends SwingWorker {
             vectorDarstellen(zahlen, kacheln, zeit);
         }
     }
-    public int quick(Vector zahlen, int start, int end) {
+    private int quick(Vector zahlen, int start, int end) {
         int pivoit = Integer.parseInt(zahlen.get(end).toString());
 
         for (int i = start; i < end; i++) {
@@ -200,9 +192,7 @@ public class WorkerVisialisierung extends SwingWorker {
         zahlen.setElementAt(temp, end);
         return start;
     }
-
-
-    public void vectorDarstellen(Vector zahlen, JPanel[][] kachel, int zeit){
+    private void vectorDarstellen(Vector zahlen, JPanel[][] kachel, int zeit){
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 kachel[i][j].setBackground(null);
