@@ -68,7 +68,6 @@ public class VisualisierungsGui extends JFrame {
         einstellungsSplit.add(pauseEinleser);
         einstellungsSplit.add(start);
         start.setText("Start");
-
         visualisierungsPanel.setLayout(new GridLayout(10,10));
 
         for(int i = 0; i < 10; i++){
