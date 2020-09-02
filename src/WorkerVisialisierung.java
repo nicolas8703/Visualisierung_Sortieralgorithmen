@@ -118,9 +118,6 @@ public class WorkerVisialisierung extends SwingWorker {
             }
             j++;
         }
-        for (int i = 0; i < zahlen.size(); i++) {
-            System.out.println(zahlen.get(i));
-        }
         vectorDarstellen(zahlen, kacheln, zeit);
     }
     public void heapSort(Vector zahlen, int zeit) {
