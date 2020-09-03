@@ -10,19 +10,27 @@ import java.util.Vector;
  *
  * @author Nicolas Feige
  * @version 1.0
- * @date 01.08.2020
+ * @date 1.08.2020
  */
-
 public class VisualisierungsGui extends JFrame {
 
     private JComboBox algorithmusAuswahl = new JComboBox();
     private JTextField vectorEinleser = new JTextField();
     private JTextField pauseEinleser = new JTextField();
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         VisualisierungsGui g = new VisualisierungsGui();
     }
 
+    /**
+     * Instantiates a new Visualisierungs gui.
+     * Creates the gui and adds an ActionListener.
+     */
     VisualisierungsGui(){
         super("Visualisierung von Sortieralgorithmen");
         JPanel[][] kacheln = new JPanel[10][10];
@@ -95,23 +103,16 @@ public class VisualisierungsGui extends JFrame {
                 }else if (groessteZahl > 10) {
                     JOptionPane.showMessageDialog(null, "Es darf keine Zahl über 10 sein!", "Fehlermeldung", JOptionPane.WARNING_MESSAGE);
                 }else {
-                    int zeit = Integer.parseInt(pauseEinleser.getText());
-                    if (algorithmusAuswahl.getSelectedItem().equals("Bubble Sort")) {
-                        new WorkerVisialisierung(zahlen, kacheln, zeit, "Bubble Sort").execute();
-                    }
-                    if (algorithmusAuswahl.getSelectedItem().equals("Quick Sort")) {
-                        new WorkerVisialisierung(zahlen, kacheln, zeit, "Quick Sort").execute();
-                    }
-                    if (algorithmusAuswahl.getSelectedItem().equals("Shaker Sort")) {
-                        new WorkerVisialisierung(zahlen, kacheln, zeit, "Shaker Sort").execute();
-                    }
-                    if (algorithmusAuswahl.getSelectedItem().equals("Heap Sort")) {
-                        new WorkerVisialisierung(zahlen, kacheln, zeit, "Heap Sort").execute();
-                    }
+                    new WorkerVisialisierung(zahlen, kacheln, Integer.parseInt(pauseEinleser.getText()), algorithmusAuswahl.getSelectedItem().toString()).execute();
                 }
             }
         });
     }
+    /**
+     * Bestimmt die grösste Zahl von Zahlen
+     * @param zahlen die Zahlen
+     * @return int   die grösste Zahl von zahlen
+     */
     private int getGroesteZahl(Vector zahlen) {
         Vector temp = new Vector();
         for (int i = 0; i < zahlen.size(); i++) {
@@ -120,6 +121,11 @@ public class VisualisierungsGui extends JFrame {
         Collections.sort(temp);
         return Integer.parseInt(temp.get(temp.size() - 1).toString());
     }
+    /**
+     * Bestimmt die kleinste Zahl von Zahlen
+     * @param zahlen die Zahlen
+     * @return int   die kleinste Zahl von zahlen
+     */
     private int getKleinsteZahl(Vector zahlen) {
         Vector temp = new Vector();
         for (int i = 0; i < zahlen.size(); i++) {
