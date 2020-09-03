@@ -25,7 +25,8 @@ public class WorkerVisialisierung extends SwingWorker {
     private int shaker_vergleiche = 0;
     private int quick_cnt = 0;
     private int quick_vergleiche = 0;
-
+    private int xValue;
+    private int yValue;
 
     /**
      * Instantiates a new Worker visialisierung.
@@ -35,44 +36,46 @@ public class WorkerVisialisierung extends SwingWorker {
      * @param zeit        die zuverzögernde zeit
      * @param algorithmus der verwendete algorithmus
      */
-    public WorkerVisialisierung(Vector zahlen, JPanel[][] kacheln, int zeit, String algorithmus) {
+    public WorkerVisialisierung(Vector zahlen, JPanel[][] kacheln, int zeit, String algorithmus, int xValue, int yValue) {
         this.zahlen = zahlen;
         this.kacheln = kacheln;
         this.zeit = zeit;
         this.algorithmus = algorithmus;
+        this.xValue = xValue;
+        this.yValue = yValue;
     }
+
     /**
-     *  Führt eine Aufgabe aus, während das gui responive bleibt.
+     * Führt eine Aufgabe aus, während das gui responive bleibt.
      */
 
     @Override
     protected Object doInBackground() throws Exception {
-        System.out.println("test");
-        if(algorithmus == "Bubble Sort"){
+        if (algorithmus == "Bubble Sort") {
             bubbleSort(zahlen, zeit);
             JOptionPane.showMessageDialog(null,
-                    "Vergleiche: "+ bubble_vergleiche +"\n" +
-                            "Schleifendurchläufe: "+ bubble_cnt + "\n");
+                    "Vergleiche: " + bubble_vergleiche + "\n" +
+                            "Schleifendurchläufe: " + bubble_cnt + "\n");
         }
-        if(algorithmus == "Quick Sort"){
+        if (algorithmus == "Quick Sort") {
             int start = 0;
-            int end = zahlen.size()-1;
+            int end = zahlen.size() - 1;
             quickSort(zahlen, zeit, start, end);
             JOptionPane.showMessageDialog(null,
-                    "Vergleiche: "+ quick_vergleiche +"\n" +
-                            "Schleifendurchläufe: "+ quick_cnt + "\n");
+                    "Vergleiche: " + quick_vergleiche + "\n" +
+                            "Schleifendurchläufe: " + quick_cnt + "\n");
         }
-        if(algorithmus == "Shaker Sort"){
+        if (algorithmus == "Shaker Sort") {
             shakerSort(zahlen, zeit);
             JOptionPane.showMessageDialog(null,
-                    "Vergleiche: "+ shaker_vergleiche +"\n" +
-                            "Schleifendurchläufe: "+ shaker_cnt + "\n");
+                    "Vergleiche: " + shaker_vergleiche + "\n" +
+                            "Schleifendurchläufe: " + shaker_cnt + "\n");
         }
-        if(algorithmus == "Heap Sort"){
+        if (algorithmus == "Heap Sort") {
             heapSort(zahlen, zeit);
             JOptionPane.showMessageDialog(null,
-                    "Vergleiche: "+ heap_vergleiche +"\n" +
-                            "Schleifendurchläufe: "+ heap_cnt + "\n");
+                    "Vergleiche: " + heap_vergleiche + "\n" +
+                            "Schleifendurchläufe: " + heap_cnt + "\n");
         }
         return null;
     }
@@ -80,10 +83,10 @@ public class WorkerVisialisierung extends SwingWorker {
     /**
      * Bubble sort.
      *
-     * @param zahlen the zahlen
-     * @param zeit   the zeit
+     * @param zahlen die zahlen
+     * @param zeit   die zeit die zwischen den Visualisierungen verzögert wird
      */
-    public void bubbleSort(Vector zahlen, int zeit){
+    public void bubbleSort(Vector zahlen, int zeit) {
         boolean fertig = true;
         vectorDarstellen(zahlen, kacheln, zeit);
         while (fertig) {
@@ -105,8 +108,8 @@ public class WorkerVisialisierung extends SwingWorker {
     /**
      * Shaker sort.
      *
-     * @param zahlen the zahlen
-     * @param zeit   the zeit
+     * @param zahlen die zahlen
+     * @param zeit   die zeit die zwischen den Visualisierungen verzögert wird
      */
     private void shakerSort(Vector zahlen, int zeit) {
         boolean fertig = true;
@@ -131,7 +134,7 @@ public class WorkerVisialisierung extends SwingWorker {
             fertig = false;
             l--;
             for (int i = l - 1; i >= j; i--) {
-                if (Integer.parseInt(zahlen.get(i).toString()) > Integer.parseInt(zahlen.get(i+1).toString())) {
+                if (Integer.parseInt(zahlen.get(i).toString()) > Integer.parseInt(zahlen.get(i + 1).toString())) {
                     int temp = Integer.parseInt(zahlen.get(i).toString());
                     zahlen.setElementAt(zahlen.get(i + 1), i);
                     zahlen.setElementAt(temp, i + 1);
@@ -149,8 +152,8 @@ public class WorkerVisialisierung extends SwingWorker {
     /**
      * Heap sort.
      *
-     * @param zahlen the zahlen
-     * @param zeit   the zeit
+     * @param zahlen die zahlen
+     * @param zeit   die zeit die zwischen den Visualisierungen verzögert wird
      */
     private void heapSort(Vector zahlen, int zeit) {
         int n = zahlen.size();
@@ -160,7 +163,8 @@ public class WorkerVisialisierung extends SwingWorker {
         }
         for (int i = n - 1; i >= 0; i--) {
             int temp = Integer.parseInt(zahlen.get(0).toString());
-            zahlen.setElementAt(zahlen.get(i) ,0);;
+            zahlen.setElementAt(zahlen.get(i), 0);
+            ;
             zahlen.setElementAt(temp, i);
             vectorDarstellen(zahlen, kacheln, zeit);
             heap_vergleiche++;
@@ -171,9 +175,9 @@ public class WorkerVisialisierung extends SwingWorker {
     /**
      * Heap.
      *
-     * @param zahlen the zahlen
-     * @param n      the n
-     * @param i      the
+     * @param zahlen die zahlen
+     * @param n      das n
+     * @param i      das i
      */
     public void heap(Vector zahlen, int n, int i) {
         heap_cnt++;
@@ -200,10 +204,10 @@ public class WorkerVisialisierung extends SwingWorker {
     /**
      * Quick sort.
      *
-     * @param zahlen the zahlen
-     * @param zeit   the zeit
-     * @param start  the start
-     * @param end    the end
+     * @param zahlen die zahlen
+     * @param zeit   die zeit die zwischen den Visualisierungen verzögert wird
+     * @param start  der start
+     * @param end    das end
      */
     private void quickSort(Vector zahlen, int zeit, int start, int end) {
         quick_cnt++;
@@ -225,9 +229,9 @@ public class WorkerVisialisierung extends SwingWorker {
     /**
      * Quick int.
      *
-     * @param zahlen the zahlen
-     * @param start  the start
-     * @param end    the end
+     * @param zahlen die zahlen
+     * @param start  der start
+     * @param end    das end
      * @return the int
      */
     public int quick(Vector zahlen, int start, int end) {
@@ -240,36 +244,44 @@ public class WorkerVisialisierung extends SwingWorker {
                 zahlen.setElementAt(temp, i);
                 start++;
                 quick_cnt++;
+                vectorDarstellen(zahlen, kacheln, zeit);
             }
         }
         int temp = Integer.parseInt(zahlen.get(start).toString());
         zahlen.setElementAt(pivoit, start);
         zahlen.setElementAt(temp, end);
+        vectorDarstellen(zahlen, kacheln, zeit);
         return start;
     }
-/**
- * Stellt den Vector zahlen visuel dar
- *
- */
-    private void vectorDarstellen(Vector zahlen, JPanel[][] kachel, int zeit){
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                kachel[i][j].setBackground(null);
+
+    /**
+     * Stellt den Vector zahlen visuel dar
+     */
+    private void vectorDarstellen(Vector zahlen, JPanel[][] kachel, int zeit) {
+        Vector temp = new Vector();
+
+        if(!temp.equals(zahlen)){
+            for (int i = 0; i < yValue; i++) {
+                for (int j = 0; j < xValue; j++) {
+                    kachel[i][j].setBackground(null);
+                    kachel[i][j].setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, Color.WHITE));
+                }
             }
-        }
-        for (int i = 0; i < 10; i++) {
-            if (zahlen.size() > i) {
-                for (int j = 0; j < 10; j++) {
-                    if (Integer.parseInt(zahlen.get(i).toString()) >= zahlen.size() - j) {
-                        kachel[j][i].setBackground(Color.BLUE);
+            for (int i = 0; i < xValue; i++) {
+                for (int j = 0; j < yValue; j++) {
+                    if (zahlen.size() > i) {
+                        if (Integer.parseInt(zahlen.get(i).toString()) >= yValue - j) {
+                            kachel[j][i].setBackground(Color.BLUE);
+                        }
                     }
                 }
             }
-        }
-        try {
-            TimeUnit.MILLISECONDS.sleep(zeit);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            try {
+                TimeUnit.MILLISECONDS.sleep(zeit);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            temp.addAll(zahlen);
         }
     }
 }
