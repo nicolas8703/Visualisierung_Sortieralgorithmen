@@ -18,6 +18,10 @@ public class VisualisierungsGui extends JFrame {
     private JTextField vectorEinleser = new JTextField();
     private JTextField pauseEinleser = new JTextField();
 
+    private int xWert;
+    private int yWert;
+    private JPanel[][] kacheln;
+
     /**
      * The entry point of application.
      *
@@ -33,7 +37,7 @@ public class VisualisierungsGui extends JFrame {
      */
     VisualisierungsGui(){
         super("Visualisierung von Sortieralgorithmen");
-        JPanel[][] kacheln = new JPanel[10][10];
+        //JPanel[][] kacheln = new JPanel[10][10];
         JPanel einstellungsSplit = new JPanel();
         JPanel hauptPanel = new JPanel();
         JPanel einstellungsPanel = new JPanel();
@@ -42,6 +46,9 @@ public class VisualisierungsGui extends JFrame {
         JLabel pauseEinleserTitel = new JLabel("Pause zwischen den Sortierungen: (in Millisekunden)");
         JLabel vectorEinleserTitel = new JLabel("Zahlen eingeben: (von 0-10, mit ',' dazwischen und maximal 10 Zahlen)");
         JButton start = new JButton("Start");
+        JButton start1 = new JButton("Start1");
+        JPanel bttnSplit = new JPanel();
+
 
         getContentPane().add(hauptPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,7 +59,8 @@ public class VisualisierungsGui extends JFrame {
         hauptPanel.setLayout(new BorderLayout());
         hauptPanel.add(einstellungsPanel, BorderLayout.NORTH);
         hauptPanel.add(visualisierungsPanel, BorderLayout.CENTER);
-        visualisierungsPanel.setBackground(Color.WHITE);
+        //visualisierungsPanel.setBackground(Color.WHITE);
+        visualisierungsPanel.setBackground(null);
         einstellungsPanel.setLayout(new GridLayout(2,3));
         einstellungsPanel.add(algorithmusAuswahlTitel);
         einstellungsPanel.add(vectorEinleserTitel);
@@ -66,19 +74,45 @@ public class VisualisierungsGui extends JFrame {
         einstellungsPanel.add(einstellungsSplit);
         einstellungsSplit.setLayout(new GridLayout(1,2));
         einstellungsSplit.add(pauseEinleser);
-        einstellungsSplit.add(start);
-        visualisierungsPanel.setLayout(new GridLayout(10,10));
+        einstellungsSplit.add(bttnSplit);
+        bttnSplit.setLayout(new GridLayout(1,2));
+        bttnSplit.add(start);
+        bttnSplit.add(start1);
 
-        for(int i = 0; i < 10; i++){
-            for (int j = 0; j < 10; j++) {
-                kacheln[i][j] = new JPanel();
-                visualisierungsPanel.add(kacheln[i][j]);
+        start1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Vector zahlen = new Vector();
+                int groessteZahl;
+
+                String temp = vectorEinleser.getText();
+                String[] temp1 = temp.split(",");
+                for (int i = 0; i < temp1.length; i++) {
+                    zahlen.add(i, temp1[i]);
+                }
+                groessteZahl = getGroesteZahl(zahlen);
+
+                xWert = zahlen.size();
+                yWert = groessteZahl;
+
+                kacheln = new JPanel[yWert][xWert];
+
+                visualisierungsPanel.setLayout(new GridLayout(yWert, xWert));
+                for(int i = 0; i < yWert; i++){
+                    for (int j = 0; j < xWert; j++) {
+                        kacheln[i][j] = new JPanel();
+                        visualisierungsPanel.add(kacheln[i][j]);
+                    }
+                }
+                kacheln[2][3].setBackground(Color.CYAN);
+                setVisible(true);
+
+                //new WorkerVisialisierung(zahlen, 200, "Bubble Sort", visualisierungsPanel, xWert, yWert, kacheln).execute();
             }
-        }
+        });
+
         start.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Vector zahlen = new Vector();
-                Vector temp2 = new Vector();
                 int groessteZahl;
                 int kleinsteZahl;
                 String temp = vectorEinleser.getText();
@@ -88,6 +122,11 @@ public class VisualisierungsGui extends JFrame {
                 }
                 kleinsteZahl = getKleinsteZahl(zahlen);
                 groessteZahl = getGroesteZahl(zahlen);
+
+                xWert = zahlen.size();
+                yWert = groessteZahl;
+
+
                 if (pauseEinleser.getText().isEmpty() || vectorEinleser.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Bitte alle Felder ausfüllen!", "Fehlermeldung", JOptionPane.WARNING_MESSAGE);
                 } else if (Integer.parseInt(pauseEinleser.getText()) < 100) {
@@ -103,7 +142,7 @@ public class VisualisierungsGui extends JFrame {
                 }else if (groessteZahl > 10) {
                     JOptionPane.showMessageDialog(null, "Es darf keine Zahl über 10 sein!", "Fehlermeldung", JOptionPane.WARNING_MESSAGE);
                 }else {
-                    new WorkerVisialisierung(zahlen, kacheln, Integer.parseInt(pauseEinleser.getText()), algorithmusAuswahl.getSelectedItem().toString()).execute();
+                    new WorkerVisialisierung(zahlen, Integer.parseInt(pauseEinleser.getText()), algorithmusAuswahl.getSelectedItem().toString(), visualisierungsPanel, xWert, yWert, kacheln).execute();
                 }
             }
         });

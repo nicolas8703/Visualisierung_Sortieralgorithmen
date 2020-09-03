@@ -25,21 +25,29 @@ public class WorkerVisialisierung extends SwingWorker {
     private int shaker_vergleiche = 0;
     private int quick_cnt = 0;
     private int quick_vergleiche = 0;
+    private JPanel visualisierungsPanel;
+    private int xWert;
+    private int yWert;
+    private VisualisierungsGui v;
 
 
     /**
      * Instantiates a new Worker visialisierung.
      *
      * @param zahlen      die zahlen
-     * @param kacheln     die kacheln für die Visualisierung
      * @param zeit        die zuverzögernde zeit
      * @param algorithmus der verwendete algorithmus
      */
-    public WorkerVisialisierung(Vector zahlen, JPanel[][] kacheln, int zeit, String algorithmus) {
+    public WorkerVisialisierung(Vector zahlen, int zeit, String algorithmus, JPanel visualisierungsPanel, int xWert, int yWert, JPanel[][] kacheln) {
         this.zahlen = zahlen;
         this.kacheln = kacheln;
         this.zeit = zeit;
         this.algorithmus = algorithmus;
+        this.visualisierungsPanel = visualisierungsPanel;
+        this.xWert = xWert;
+        this.yWert = yWert;
+        //this.v = v;
+        //kacheln = new JPanel[yWert][xWert];
     }
     /**
      *  Führt eine Aufgabe aus, während das gui responive bleibt.
@@ -47,6 +55,9 @@ public class WorkerVisialisierung extends SwingWorker {
 
     @Override
     protected Object doInBackground() throws Exception {
+
+        kacheln[1][2].setBackground(Color.CYAN);
+        visualisierungsPanel.setVisible(true);
         if(algorithmus == "Bubble Sort"){
             bubbleSort(zahlen, zeit);
             JOptionPane.showMessageDialog(null,
@@ -73,6 +84,7 @@ public class WorkerVisialisierung extends SwingWorker {
                     "Vergleiche: "+ heap_vergleiche +"\n" +
                             "Schleifendurchläufe: "+ heap_cnt + "\n");
         }
+        //visualisierungsPanel.removeAll();
         return null;
     }
 
@@ -251,11 +263,62 @@ public class WorkerVisialisierung extends SwingWorker {
  *
  */
     private void vectorDarstellen(Vector zahlen, JPanel[][] kachel, int zeit){
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0; i < yWert; i++) {
+            for (int j = 0; j < xWert; j++) {
                 kachel[i][j].setBackground(null);
             }
         }
+        for (int i = 0; i < xWert; i++) {
+            if (zahlen.size() > xWert) {
+                for (int j = 0; j < yWert; j++) {
+                    if (Integer.parseInt(zahlen.get(xWert).toString()) >= zahlen.size() - yWert) {
+                        kachel[yWert][xWert].setBackground(Color.BLUE);
+                    }
+                }
+            }
+        }
+        try {
+            TimeUnit.MILLISECONDS.sleep(zeit);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        visualisierungsPanel.setVisible(true);
+    }
+
+                /**
+                if(Integer.parseInt(zahlen.get(xWert).toString()) >= 1){
+                    kachel[9][xWert].setBackground(Color.BLUE);
+                }
+                if(Integer.parseInt(zahlen.get(xWert).toString()) >= 2){
+                    kachel[8][xWert].setBackground(Color.BLUE);
+                }
+                if(Integer.parseInt(zahlen.get(xWert).toString()) >= 3){
+                    kachel[7][xWert].setBackground(Color.BLUE);
+                }
+                if(Integer.parseInt(zahlen.get(xWert).toString()) >= 4){
+                    kachel[6][xWert].setBackground(Color.BLUE);
+                }
+                if(Integer.parseInt(zahlen.get(xWert).toString()) >= 5){
+                    kachel[5][xWert].setBackground(Color.BLUE);
+                }
+                if(Integer.parseInt(zahlen.get(xWert).toString()) >= 6){
+                    kachel[4][xWert].setBackground(Color.BLUE);
+                }
+                if(Integer.parseInt(zahlen.get(xWert).toString()) >= 7){
+                    kachel[3][xWert].setBackground(Color.BLUE);
+                }
+                if(Integer.parseInt(zahlen.get(xWert).toString()) >= 8){
+                    kachel[2][xWert].setBackground(Color.BLUE);
+                }
+                if(Integer.parseInt(zahlen.get(xWert).toString()) >= 9){
+                    kachel[1][xWert].setBackground(Color.BLUE);
+                }
+                if(Integer.parseInt(zahlen.get(xWert).toString()) >= 10){
+                    kachel[0][xWert].setBackground(Color.BLUE);
+                }
+
+
+
         if(zahlen.size() > 0){
             if(Integer.parseInt(zahlen.get(0).toString()) >= 1){
                 kachel[9][0].setBackground(Color.BLUE);
@@ -576,10 +639,5 @@ public class WorkerVisialisierung extends SwingWorker {
                 kachel[0][9].setBackground(Color.PINK);
             }
         }
-        try {
-            TimeUnit.MILLISECONDS.sleep(zeit);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+                 */
 }
