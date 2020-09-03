@@ -2,21 +2,26 @@
 
 Das ist eine angefangene Visualisierung der Sortieralgorithmen Quicksort, Bubblesort, Heapsort und Shakersort. Die Sortieralgorithmen stammen aus einer Abschlussarbeit von Modul 411.
 
-Der Sortieralgorithmus wird mit der Sortierung farbiger Balken visualisiert. Man kann zehn Zahlen von eins bis zehn eingeben, ein Sortieralgorithmus auswählen
-und die Geschwindigkeit auswählen. Nach der Visualisierung werden die Schleifendurchläufe und die Anzahl der Vergleiche ausgegeben.
+Der Sortieralgorithmus wird mit der Sortierung mehrerer Balken visualisiert. Man kann beliebig viele Zahlen eingeben, ein Sortieralgorithmus auswählen
+und die Geschwindigkeit bestimmen. Nach der Visualisierung werden die Schleifendurchläufe und die Anzahl der Vergleiche ausgegeben.
 
-Bei der Eingabe der Werte ist darauf zu achten, dass keine Leerzeichen zwischen den Kommas sind. Z.B: 10,9,8,7,6,5,4,3,2,1
+Bei der Eingabe der Werte ist darauf zu achten, dass keine Leerzeichen zwischen den Kommas sind. Z.B: 50,13,22,14,8,3,33,42,19
 
-Schwierigkeiten:
+Schwierigkeiten:<br>
+Die erste Schwierigkeit war, dass die Visualisierung von einem ActionListener aufgerufen wurde. Dieser wurde dann im Event Dispatch Thread (EDT) ausgeführt.
+Deswegen konnte sich das GUI erst dann neu darstellen, wenn die Ausführung des gesamten Codes abgeschlossen war. 
+Damit die Visualisierung trotzdem funktionieren kann, habe ich den Code in einem separaten Thread ausgeführt. Hierfür habe ich einen SwingWorker verwendet.
+Da ich noch nie zuvor mit so etwas gearbeitet habe, musste ich viel recherchieren und nachschlagen.
 
+Die zweite Schwierigkeit waren die zweidimensionalen Arrays, die ich benötigt habe. Wir haben diese in der Schule nur kurz angeschaut und die for Schleifen mit den zweidimensionalen Arrays haben viele Notizen und Überlegungen gebraucht.
 
-Weiterentwicklung:
+Weiterentwicklung:<br>
 In der nächsten Version sollen die zeitlichen Abstände der Visualisierung von Quicksort noch optimiert werden.
 Momentan ist die Verzögerung zwischen den einzelnen Schritten nicht immer gleich.
 
-In der nächsten Version soll es ausserdem möglich sein, beliebige Zahlen einzugeben und beliebig viele.
-Die Panels, auf denen die Algorithmen visualisiert werden, sollen dynamisch erweitert oder verkleinert werden. 
-Dafür werden die Einstellungen in ein separates Gui verschoben und die Farben der einzelnen Werte werden vereinheitlicht.
+In der nächsten Version soll es ausserdem möglich sein, beliebige Zahlen einzugeben und beliebig viele.DONE
+Die Panels, auf denen die Algorithmen visualisiert werden, sollen dynamisch erweitert oder verkleinert werden. DONE
+Dafür werden die Einstellungen in ein separates Gui verschoben und die Farben der einzelnen Werte werden vereinheitlicht. DONE
 
 Es werden noch weitere Sortieralgorithmen wie zum Beispiel der binaryTreeSort oder der insertionSort hinzugefügt.
 
